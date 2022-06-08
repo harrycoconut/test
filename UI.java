@@ -57,10 +57,20 @@ public class UI implements ActionListener
 					JOptionPane.showMessageDialog(null, "輸入值不能為空!","警告",3);
 					sign_up();
 				}
+				member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
+				if(member.sign_up()){home();}
+				else{sign_up();}
+				break;
+			case 4:
+				if(accTF.getText().isBlank()||nameTF.getText().isBlank()||passTF.getText().isBlank()||idTF.getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "輸入值不能為空!","警告",3);
+					sign_up();
+				}
 				else
 				{
 					member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
-					if(member.findAccount()==-1)
+					if(member.sign_up())
 					{
 						member.sign_up();
 						home();
@@ -154,7 +164,7 @@ public class UI implements ActionListener
 		panel.add(idLB);
 		panel.add(idTF);
 
-		confirm.setActionCommand("3");
+		confirm.setActionCommand("4");
 		back.setActionCommand("0");
 		confirm.addActionListener(this);
 		back.addActionListener(this);

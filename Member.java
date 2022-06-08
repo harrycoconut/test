@@ -21,6 +21,7 @@ public class Member
 
 	public boolean sign_up()
 	{
+		findAccount();
 		if(accIndex==-1)
 		{
 			JOptionPane.showMessageDialog(null,"註冊成功\n歡迎 "+getName(),"歡迎",1);
@@ -36,6 +37,7 @@ public class Member
 
 	public String log_in()
 	{
+		findAccount();
 		if(accIndex==-1)
 		{
 			JOptionPane.showMessageDialog(null,"此帳號不存在!","錯誤",0);
@@ -55,14 +57,13 @@ public class Member
 		}
 	}
 
-	public int findAccount()
+	public void findAccount()
 	{
 		accIndex=-1;
 		for(int i=0;i<data.readMembers().size();i++)
 		{
 			if(data.readMembers().get(i).getAccount().equals(getAccount())){accIndex=i;}
 		}
-		return accIndex;
 	}
 	public String toString()
 	{

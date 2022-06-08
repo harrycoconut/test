@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -8,18 +7,18 @@ public class UI2 implements ActionListener
 {
 	JFrame frame;
 	JPanel panel;
-	ArrayList<String> tes=new ArrayList<>();
+	private JTextField accTF,nameTF,passTF,idTF;
 	private Member member;
 	public int w=1000,h=750;
 	public static void main(String[] args)
 	{
-		UI2 ui=new UI2();
-		ui.s1();
+		UI2 UI2=new UI2();
+		UI2.ui2();
 	}
 
 	public UI2()
 	{
-		frame = new JFrame("åœ–æ›¸é¤¨");
+		frame = new JFrame("¹Ï®ÑÀ]");
 		frame.setResizable(false);
 		frame.setSize(w, h);
 		frame.setLocationRelativeTo(null);
@@ -29,8 +28,8 @@ public class UI2 implements ActionListener
 			public void windowClosing(WindowEvent e)
 			{
 				int result = JOptionPane.showConfirmDialog(frame,
-						"æ˜¯å¦é—œé–‰ç¨‹å¼",
-						"è­¦å‘Š",
+						"¬O§_Ãö³¬µ{¦¡",
+						"Äµ§i",
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.WARNING_MESSAGE);
 				if (result == JOptionPane.YES_OPTION){System.exit(0);}
@@ -40,34 +39,65 @@ public class UI2 implements ActionListener
 	
 	public void actionPerformed(ActionEvent e)
 	{
-		frame.remove(panel);
 		switch (Integer.parseInt(e.getActionCommand()))
 		{
 			case 0:
-				s1();
+				frame.remove(panel);
+				ui2();
 				break;
 			case 1:
 				log_in();
 				break;
 			case 2:
 				sign_up();
+				break;
 			case 3:
-				member.sign_up();
+				if(accTF.getText().isBlank()||nameTF.getText().isBlank()||passTF.getText().isBlank()||idTF.getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "¿é¤J­È¤£¯à¬°ªÅ!","Äµ§i",3);
+					sign_up();
+				}
+				member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
+				if(member.sign_up()){home();}
+				else
+				{
+					frame.remove(panel);
+					sign_up();
+				}
 				break;
 			case 4:
-				home();						
+				if(accTF.getText().isBlank()||nameTF.getText().isBlank()||passTF.getText().isBlank()||idTF.getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "¿é¤J­È¤£¯à¬°ªÅ!","Äµ§i",3);
+					sign_up();
+				}
+				else
+				{
+					member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
+					if(member.sign_up())
+					{
+						member.sign_up();
+						home();
+					}
+					else
+					{
+						member.sign_up();
+						sign_up();
+					}
+				}
 			default:
 				break;
 		}
 	}
-	public void s1()
+	public void ui2()
 	{
+
 		panel= new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER,w/3,h*3/4));
 		//new ImageIcon("user.png")
 
-		JButton log_in = new JButton("ç™»å…¥");
-		JButton panel_up = new JButton("è¨»å†Š");
+		JButton log_in = new JButton("µn¤J");
+		JButton panel_up = new JButton("µù¥U");
 		log_in.setActionCommand("1");
 		panel_up.setActionCommand("2");
 		log_in.addActionListener(this);
@@ -83,31 +113,23 @@ public class UI2 implements ActionListener
 
 	public void log_in()
 	{
+		frame.remove(panel);
 		panel= new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT,w/50,h/2));
 		//new ImageIcon("user.png")
 
-		JButton confirm = new JButton("ç¢ºèª");
-		JButton back = new JButton("è¿”å›");
+		JButton confirm = new JButton("½T»{");
+		JButton back = new JButton("ªğ¦^");
 
-		JLabel accLB=new JLabel("å¸³è™Ÿ");
+		JLabel accLB=new JLabel("±b¸¹");
 		JTextField accTF = new JTextField(16);
-		JLabel passLB=new JLabel("å¯†ç¢¼");
-		JTextField passTF = new JPasswordField(12); // éæ˜æ–‡å¯†ç¢¼è¼¸å…¥ï¼›
+		JLabel passLB=new JLabel("±K½X");
+		JTextField passTF = new JPasswordField(12); // «D©ú¤å±K½X¿é¤J¡F
 		
 		panel.add(accLB);
 		panel.add(accTF);
 		panel.add(passLB);
 		panel.add(passTF);
-		if(accTF.getText()!=null && passTF.getText()!=null){member=new Member(accTF.getText(),passTF.getText());}
-		else{JOptionPane.showMessageDialog(null, "è¼¸å…¥å€¼ä¸èƒ½ç‚ºç©º!","è­¦å‘Š",3);}
-		member=new Member(accTF.getText(),passTF.getText());
-		try{
-			confirm.setActionCommand(member.log_in());
-		}catch(Exception e){
-			confirm.setActionCommand("1");
-			e.printStackTrace();
-		}
 		
 		back.setActionCommand("0");
 		confirm.addActionListener(this);
@@ -121,33 +143,31 @@ public class UI2 implements ActionListener
 	
 	public void sign_up()
 	{
+		frame.remove(panel);
 		panel= new JPanel();
 		panel.setLayout(new FlowLayout());
 		//new ImageIcon("user.png")
 
-		JButton confirm = new JButton("ç¢ºèª");
-		JButton back = new JButton("è¿”å›");
+		JButton confirm = new JButton("½T»{");
+		JButton back = new JButton("ªğ¦^");
 
-		JLabel nameLB=new JLabel("å§“å");
-		JTextField nameTF = new JTextField(16);
-		JLabel idLB=new JLabel("èº«åˆ†");
-		JTextField idTF = new JTextField(16);
-		JLabel accLB=new JLabel("å¸³è™Ÿ");
-		JTextField accTF = new JTextField(16);
-		JLabel passLB=new JLabel("å¯†ç¢¼");
-		JTextField passTF = new JPasswordField(12); // éæ˜æ–‡å¯†ç¢¼è¼¸å…¥ï¼›
-		panel.add(nameLB);
-		panel.add(nameTF);
-		panel.add(idLB);
-		panel.add(idTF);
+		JLabel nameLB=new JLabel("©m¦W");
+		nameTF = new JTextField(16);
+		JLabel idLB=new JLabel("¨­¤À");
+		idTF = new JTextField(16);
+		JLabel accLB=new JLabel("±b¸¹");
+		accTF = new JTextField(16);
+		JLabel passLB=new JLabel("±K½X");
+		passTF = new JPasswordField(12); // «D©ú¤å±K½X¿é¤J¡F
 		panel.add(accLB);
 		panel.add(accTF);
+		panel.add(nameLB);
+		panel.add(nameTF);
 		panel.add(passLB);
 		panel.add(passTF);
+		panel.add(idLB);
+		panel.add(idTF);
 
-		if(accTF.getText()!=null && nameTF.getText()!=null && passTF.getText()!=null && idTF.getText()!=null){member=new Member(accTF.getText(), nameTF.getText(),passTF.getText(),idTF.getText());}
-		else{JOptionPane.showMessageDialog(null, "è¼¸å…¥å€¼ä¸èƒ½ç‚ºç©º!","è­¦å‘Š",3);}
-		
 		confirm.setActionCommand("4");
 		back.setActionCommand("0");
 		confirm.addActionListener(this);
@@ -161,15 +181,16 @@ public class UI2 implements ActionListener
 	
 	public void home()
 	{
+		frame.remove(panel);
 		panel= new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER,w/50,h/4));
 		
-		JButton sear = new JButton("æ›¸ç±æŸ¥è©¢");
-		JButton returnBook = new JButton("é‚„æ›¸");
-		JButton inform = new JButton("å€‹äººè³‡è¨Š");
-		JButton history = new JButton("æ­·å²ç´€éŒ„");
-		JButton manaBook = new JButton("æ›¸ç±ç®¡ç†");
-		JButton fee = new JButton("ç¹³ç´ç½°é‡‘");
+		JButton sear = new JButton("®ÑÄy¬d¸ß");
+		JButton returnBook = new JButton("ÁÙ®Ñ");
+		JButton inform = new JButton("­Ó¤H¸ê°T");
+		JButton history = new JButton("¾ú¥v¬ö¿ı");
+		JButton manaBook = new JButton("®ÑÄyºŞ²z");
+		JButton fee = new JButton("Ãº¯Ç»@ª÷");
 		
 		sear.setActionCommand("4");
 		returnBook.setActionCommand("5");
@@ -188,7 +209,7 @@ public class UI2 implements ActionListener
 		panel.add(returnBook);
 		panel.add(inform);
 		panel.add(history);
-		if(member.getIdentity()=="Admin")
+		if(member.getIdentity().equals("Admin"))
 		{
 			panel.add(manaBook);
 			panel.add(fee);
