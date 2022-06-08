@@ -73,10 +73,10 @@ public class Data
 			BufferedReader br = new BufferedReader(fr);
 			members=new ArrayList<>();
 			while (br.ready())
-			{	
+			{
 				input= br.readLine();
 				inputArray2=input.split("\t");
-				members.add(new Member(inputArray2[0],inputArray2[1],inputArray2[2],inputArray2[3]));
+				if(inputArray2[0].isBlank()==false && inputArray2[0].isBlank()==false && inputArray2[0].isBlank()==false && inputArray2[0].isBlank()==false){members.add(new Member(inputArray2[0],inputArray2[1],inputArray2[2],inputArray2[3]));}
 			}
 			fr.close();
 			return members;
@@ -102,5 +102,4 @@ public class Data
 			e.printStackTrace();;
 		}
 	}
-	public ArrayList<Member> getMembers(){return members;}
 }

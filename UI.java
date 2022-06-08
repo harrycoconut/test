@@ -7,6 +7,10 @@ public class UI implements ActionListener
 {
 	JFrame frame;
 	JPanel panel;
+	JLabel accLB=new JLabel("帳號");
+	JLabel passLB=new JLabel("密碼");
+	JLabel nameLB=new JLabel("姓名");
+	JLabel idLB=new JLabel("身分");
 	private JTextField accTF,nameTF,passTF,idTF;
 	private Member member;
 	public int w=1000,h=750;
@@ -57,33 +61,28 @@ public class UI implements ActionListener
 					JOptionPane.showMessageDialog(null, "輸入值不能為空!","警告",3);
 					sign_up();
 				}
-				member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
-				if(member.sign_up()){home();}
-				else{sign_up();}
+				else{
+					member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
+					if(member.sign_up()){home();}
+					else{sign_up();}
+				}
 				break;
 			case 4:
-				if(accTF.getText().isBlank()||nameTF.getText().isBlank()||passTF.getText().isBlank()||idTF.getText().isBlank())
+				if(accTF.getText().isBlank()||passTF.getText().isBlank())
 				{
 					JOptionPane.showMessageDialog(null, "輸入值不能為空!","警告",3);
-					sign_up();
+					log_in();
 				}
-				else
-				{
-					member=new Member(accTF.getText(),nameTF.getText(),passTF.getText(),idTF.getText());
-					if(member.sign_up())
-					{
-						member.sign_up();
-						home();
-					}
-					else
-					{
-						member.sign_up();
-						sign_up();
-					}
+				else{
+					member=new Member(accTF.getText(),passTF.getText());
+					if(member.log_in()){home();}
+					else{log_in();}
 				}
-			default:
 				break;
+				default:
+					break;
 		}
+		
 	}
 	public void ui()
 	{
@@ -117,16 +116,14 @@ public class UI implements ActionListener
 		JButton confirm = new JButton("確認");
 		JButton back = new JButton("返回");
 
-		JLabel accLB=new JLabel("帳號");
-		JTextField accTF = new JTextField(16);
-		JLabel passLB=new JLabel("密碼");
-		JTextField passTF = new JPasswordField(12); // 非明文密碼輸入；
+		accTF = new JTextField(16);
+		passTF = new JPasswordField(12); // 非明文密碼輸入；
 		
 		panel.add(accLB);
 		panel.add(accTF);
 		panel.add(passLB);
 		panel.add(passTF);
-		
+		confirm.setActionCommand("4");		
 		back.setActionCommand("0");
 		confirm.addActionListener(this);
 		back.addActionListener(this);
@@ -147,13 +144,9 @@ public class UI implements ActionListener
 		JButton confirm = new JButton("確認");
 		JButton back = new JButton("返回");
 
-		JLabel nameLB=new JLabel("姓名");
 		nameTF = new JTextField(16);
-		JLabel idLB=new JLabel("身分");
 		idTF = new JTextField(16);
-		JLabel accLB=new JLabel("帳號");
 		accTF = new JTextField(16);
-		JLabel passLB=new JLabel("密碼");
 		passTF = new JPasswordField(12); // 非明文密碼輸入；
 		panel.add(accLB);
 		panel.add(accTF);
@@ -164,7 +157,7 @@ public class UI implements ActionListener
 		panel.add(idLB);
 		panel.add(idTF);
 
-		confirm.setActionCommand("4");
+		confirm.setActionCommand("3");
 		back.setActionCommand("0");
 		confirm.addActionListener(this);
 		back.addActionListener(this);

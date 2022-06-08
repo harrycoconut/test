@@ -15,8 +15,7 @@ public class Member
 	}
 	public Member(String account,String password)
 	{
-		setAccount(account);
-		setPassword(password);
+		this(account, null, password, null);
 	}
 
 	public boolean sign_up()
@@ -35,25 +34,25 @@ public class Member
 		}
 	}
 
-	public String log_in()
+	public boolean log_in()
 	{
 		findAccount();
 		if(accIndex==-1)
 		{
 			JOptionPane.showMessageDialog(null,"此帳號不存在!","錯誤",0);
-			return "2";
+			return false;
 		}
 		else if(data.readMembers().get(accIndex).getPassword().equals(getPassword()))
 		{
 			setName(data.readMembers().get(accIndex).getName());
 			setIdentity(data.readMembers().get(accIndex).getIdentity());
 			JOptionPane.showMessageDialog(null,"登入成功\n歡迎 "+getName(),"歡迎",1);
-			return "3";
+			return true;
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null,"密碼錯誤!","警告",3);
-			return "2";
+			return false;
 		}
 	}
 
